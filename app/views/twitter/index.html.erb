@@ -1,0 +1,41 @@
+<h1>ハッシュタグを指定してTwitterの情報を確認しよう</h1>
+<pre>
+	15分以内で15回以上検索するとエラーになるので注意してね
+</pre>
+
+<%= form_for @twitter, :html => { :class => 'form-inline', :role => 'form' }, url: root_path do |f| %>
+	<div class="form-group">
+		<%= f.label :tag, "ハッシュタグ", class: 'control-label' %>
+		<%= f.text_field :tag, name: :tag, class: 'form-control', placeholder: '#hogehoge' %>
+	</div>
+	<div class="form-group">
+		<%= f.label :limit, "取得数", class: 'control-label' %>
+		<%= select_tag :limit, options_for_select([50, 100]), class: 'form-control' %>
+	</div>
+	<%= f.submit '取得する', class: 'btn btn-primary' %>
+<% end %>
+
+<br>
+
+<% if @twitter.tweet.present? %>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>アイコン</td>
+			<td>id</td>
+			<td>tweet内容</td>
+			<td>リツイート数</td>
+		</tr>
+	</thead>
+	<tbody>
+		<% @twitter.tweet.each do |tweet| %>
+		<tr>
+			<td><img src="<%= tweet[:icon] %>" alt="icon"></td>
+			<td><%= tweet[:name] %></td>
+			<td><%= tweet[:text] %></td>
+			<td><%= tweet[:rt] %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+<% end %>
