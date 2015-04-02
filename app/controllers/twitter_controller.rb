@@ -1,7 +1,6 @@
 class TwitterController < ApplicationController
   def index
     @twitter ||= MyTwitter.new
-    p @twitter.tag
   end
 
   def tweet
